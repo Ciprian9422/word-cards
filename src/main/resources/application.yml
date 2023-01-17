@@ -1,0 +1,29 @@
+
+spring:
+  application:
+    name: word-cards
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/wc?currentSchema=
+    type: com.zaxxer.hikari.HikariDataSource
+    username: wcards
+    password: wcards123
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    default-schema: wc
+    change-log: classpath:db/master.xml
+
+logging:
+  file:
+    name: ./logs
+  logback:
+    rollingpolicy:
+      file-name-pattern: .%d{yyyy-MM-dd}.%i.gz
+      max-file-size: 100MB
+  level:
+    root: info
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1/

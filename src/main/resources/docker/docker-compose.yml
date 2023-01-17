@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  wc-db:
+    image: postgis/postgis:14-3.3-alpine
+    environment:
+      - POSTGRES_USER=wcards
+      - POSTGRES_PASSWORD=wcards123
+      - POSTGRES_DB=wc
+    ports:
+      - '5432:5432'
+    volumes:
+      - wc-data:/var/lib/postgresql/data
+      - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
+volumes:
+  wc-data:
+    driver: local
