@@ -10,7 +10,7 @@ services:
       - '5432:5432'
     volumes:
       - wc-data:/var/lib/postgresql/data
-      - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
+      - "./initial_schema.sql:/docker-entrypoint-initdb.d/initial_schema.sql"
 volumes:
   wc-data:
     driver: local

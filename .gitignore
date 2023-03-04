@@ -1,6 +1,8 @@
 HELP.md
 target/
-!web-gn/.mvn/wrapper/maven-wrapper.jar
+logs
+*.cmd
+**/.mvn/*
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -41,5 +43,3 @@ node_modules/
 npm-debug.log.*
 /.awcache/*
 /.cache-loader/*
-
-/logs/
