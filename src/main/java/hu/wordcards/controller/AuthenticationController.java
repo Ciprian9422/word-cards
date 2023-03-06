@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,8 @@ public class AuthenticationController {
 
   @PostMapping("/authentication")
   public ResponseEntity<String> authenticate(@RequestBody AuthenticationRequest request) {
-    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
+    authenticationManager.authenticate(authentication);
     final UserDetails userDetails = userDao.findUserByUsername(request.getUsername());
     if (userDetails != null) {
       return ResponseEntity.ok(jwtUtils.generateToken(userDetails));
@@ -31,4 +33,14 @@ public class AuthenticationController {
     return ResponseEntity.status(400).body("Some error has occured");
   }
 
+  @PostMapping("/testAuth")
+  public ResponseEntity<String> testAuth(@ModelAttribute AuthenticationRequest request) {
+    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
+    authenticationManager.authenticate(authentication);
+    final UserDetails userDetails = userDao.findUserByUsername(request.getUsername());
+    if (userDetails != null) {
+      return ResponseEntity.ok(jwtUtils.generateToken(userDetails));
+    }
+    return ResponseEntity.status(400).body("Some error has occured");
+  }
 }
